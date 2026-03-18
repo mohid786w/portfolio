@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Mohid</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* ── BIG CTA ── */
+    .contact-hero {
+      background: var(--black);
+      padding: 160px 48px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+    .contact-hero-inner { position: relative; z-index: 1; }
+    .contact-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 32px;
+    }
+    .contact-big-title {
+      font-family: var(--font-display);
+      font-size: clamp(80px, 13vw, 180px);
+      line-height: 0.9;
+      letter-spacing: 4px;
+      margin-bottom: 40px;
+    }
+    .contact-big-title .line1 { color: var(--white); display: block; }
+    .contact-big-title .line2 {
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(0,255,136,0.4);
+      display: block;
+      transition: -webkit-text-stroke-color 0.4s;
+    }
+    .contact-big-title .line2:hover { -webkit-text-stroke-color: var(--neon); }
+
+    .contact-email-link {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 52px);
+      letter-spacing: 2px;
+      color: var(--neon);
+      transition: color 0.3s;
+      margin-bottom: 60px;
+    }
+    .contact-email-link:hover { color: var(--cyan); }
+
+    .contact-social {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .social-btn {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .social-btn:hover { border-color: var(--neon); color: var(--neon); }
+
+    /* ── FORM SECTION ── */
+    .form-section {
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .form-left {
+      padding: 100px 64px;
+      border-right: 1px solid var(--border);
+    }
+    .form-right { padding: 100px 64px; }
+
+    .form-group {
+      margin-bottom: 28px;
+    }
+    .form-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      background: var(--grey);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      padding: 14px 18px;
+      outline: none;
+      transition: border-color var(--transition), background var(--transition);
+      appearance: none;
+    }
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: #444; }
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus { border-color: var(--neon); background: var(--mid); }
+    .form-textarea { min-height: 150px; resize: vertical; }
+    .form-select option { background: var(--grey); }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .form-submit {
+      width: 100%;
+      background: var(--neon);
+      color: var(--black);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 18px 32px;
+      border: none;
+      cursor: none;
+      transition: all var(--transition);
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+      margin-top: 8px;
+    }
+    .form-submit:hover { background: var(--cyan); transform: translateY(-2px); }
+
+    .form-success {
+      display: none;
+      background: rgba(0,255,136,0.08);
+      border: 1px solid var(--neon);
+      padding: 20px 24px;
+      margin-top: 16px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--neon);
+      text-transform: uppercase;
+    }
+
+    /* Info side */
+    .contact-info-item {
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-info-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .ci-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 10px;
+    }
+    .ci-val {
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: 1px;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .ci-sub { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ── MAP / LOCATION PLACEHOLDER ── */
+    .location-section {
+      background: var(--black);
+      padding: 100px 48px;
+    }
+    .location-box {
+      background: var(--grey);
+      border: 1px solid var(--border);
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .location-box::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .location-inner {
+      position: relative;
+      text-align: center;
+    }
+    .location-pin { font-size: 48px; margin-bottom: 16px; }
+    .location-name {
+      font-family: var(--font-display);
+      font-size: 36px;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .location-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .contact-hero { padding: 120px 24px 60px; }
+      .form-section { grid-template-columns: 1fr; }
+      .form-left { border-right: none; border-bottom: 1px solid var(--border); padding: 60px 24px; }
+      .form-right { padding: 60px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .location-section { padding: 60px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav class="nav">
+    <a href="../index.html" class="nav-logo">M<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="experience.html">Experience</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active nav-cta">Contact</a></li>
+    </ul>
+    <div class="nav-burger" id="burger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- BIG CONTACT HERO -->
+  <section class="contact-hero">
+    <div class="contact-hero-inner">
+      <div class="contact-eyebrow">Let's Make Something</div>
+      <h1 class="contact-big-title">
+        <span class="line1">LET'S</span>
+        <span class="line2">BUILD.</span>
+      </h1>
+      <a href="mailto:mohid.waseem@outlook.com" class="contact-email-link">
+        mohid.waseem@outlook.com
+      </a>
+      <div class="contact-social">
+        <a href="https://github.com/mohid786w" class="social-btn">↗ GitHub</a>
+        <a href="https://www.linkedin.com/in/mohid-waseem-9b320b3b8?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BJb2vR9XzTM%2BcccM6vuwTPg%3D%3D" class="social-btn">↗ LinkedIn</a>
+        <a href="https://www.instagram.com/mohid.waseem5?igsh=MXI3Zmc4YXBpNHkycA==" class="social-btn">↗ Instagram</a>
+        <a href="https://x.com/MohidW49599" class="social-btn">↗ Twitter / X</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM + INFO -->
+  <section class="form-section">
+    <!-- FORM -->
+    <div class="form-left reveal">
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title" style="margin-bottom:40px;">SEND A<br>MESSAGE</h2>
+
+      <form id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="fname">First Name</label>
+            <input class="form-input" type="text" id="fname" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="lname">Last Name</label>
+            <input class="form-input" type="text" id="lname" placeholder="Your surname" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input class="form-input" type="email" id="email" placeholder="your@email.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="subject">What's this about?</label>
+          <select class="form-select" id="subject">
+            <option value="">Select an option</option>
+            <option>Job Opportunity</option>
+            <option>Freelance Project</option>
+            <option>Collaboration</option>
+            <option>Just Saying Hi</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">Message</label>
+          <textarea class="form-textarea" id="message" placeholder="Tell me about your project, opportunity or idea..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message →</button>
+        <div class="form-success" id="formSuccess">
+          ✓ Message sent — I'll be in touch soon!
+        </div>
+      </form>
+    </div>
+
+    <!-- INFO -->
+    <div class="form-right reveal reveal-delay-2">
+      <div class="section-label">Contact Info</div>
+      <h2 class="section-title" style="margin-bottom:40px;">FIND<br>ME HERE</h2>
+
+      <div class="contact-info-item">
+        <div class="ci-label">Email</div>
+        <div class="ci-val">mohid.waseem@outlook.com</div>
+        <div class="ci-sub">Best way to reach me — I reply within 24 hours.</div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-label">Whatsapp Contact</div>
+        <div class="ci-val">+971556220712</div>
+        <div class="ci-sub">Open to remote work and on-site.</div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-label">Availability</div>
+        <div class="ci-val">Now</div>
+        <div class="ci-sub">Available for full-time roles, internships and freelance projects.</div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-label">Response Time</div>
+        <div class="ci-val">Within 24 hours</div>
+        <div class="ci-sub">Monday – Friday. Fastest via email or LinkedIn.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location-section">
+    <div class="section-label reveal">Based In</div>
+    <div class="location-box reveal">
+      <div class="location-inner">
+        <div class="location-pin">📍</div>
+        <div class="location-name">Dubai, UAE</div>
+        <div class="location-sub">Open to remote · hybrid · on-site</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-logo">M<span>.</span></div>
+    <div class="footer-copy">© 2026 Mohid · All rights reserved</div>
+    <div class="footer-status"><div class="pulse"></div> Open to opportunities</div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Form submit handler
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const success = document.getElementById('formSuccess');
+      success.style.display = 'block';
+      this.reset();
+      setTimeout(() => { success.style.display = 'none'; }, 5000);
+    });
+  </script>
+</body>
+</html>

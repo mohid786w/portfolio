@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experience — Mohid</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* ── TIMELINE ── */
+    .exp-section { background: var(--black); }
+
+    .timeline {
+      position: relative;
+      padding-left: 36px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--neon), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 4px;
+      background: var(--grey);
+      border: 1px solid var(--border);
+      border-left: 3px solid transparent;
+      padding: 36px 40px;
+      display: grid;
+      grid-template-columns: 180px 1fr auto;
+      gap: 40px;
+      align-items: start;
+      transition: all var(--transition);
+    }
+    .timeline-item:hover {
+      border-left-color: var(--neon);
+      background: var(--mid);
+      transform: translateX(4px);
+    }
+    .timeline-item.edu { border-left-color: rgba(0,207,255,0.3); }
+    .timeline-item.edu:hover { border-left-color: var(--cyan); }
+    .timeline-item.hs { border-left-color: rgba(255,45,85,0.3); }
+    .timeline-item.hs:hover { border-left-color: var(--red); }
+
+    /* dot on timeline */
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -43px; top: 44px;
+      width: 10px; height: 10px;
+      background: var(--neon);
+      border-radius: 50%;
+      border: 2px solid var(--black);
+    }
+    .timeline-item.edu::before { background: var(--cyan); }
+    .timeline-item.hs::before  { background: var(--red); }
+
+    .tl-period {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      padding-top: 4px;
+    }
+    .tl-role {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 1px;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .tl-company {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .tl-desc {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.8;
+      max-width: 600px;
+    }
+    .tl-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .tl-tag {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .tl-badge {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      white-space: nowrap;
+      align-self: start;
+    }
+    .timeline-item:hover .tl-badge { border-color: var(--neon); color: var(--neon); }
+    .timeline-item.edu:hover .tl-badge { border-color: var(--cyan); color: var(--cyan); }
+    .timeline-item.hs:hover .tl-badge  { border-color: var(--red); color: var(--red); }
+
+    /* ── SKILLS ── */
+    .skills-section { background: var(--dark); }
+    .skills-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+    .skill-group-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 28px;
+    }
+    .skill-row {
+      margin-bottom: 24px;
+    }
+    .skill-row-top {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .skill-bar {
+      height: 3px;
+      background: var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--neon), var(--cyan));
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── FOOTBALL ── */
+    .football-section { background: var(--black); }
+    .football-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+    }
+    .football-stat-box {
+      background: var(--grey);
+      padding: 48px;
+      text-align: center;
+      border-bottom: 3px solid transparent;
+      transition: all var(--transition);
+    }
+    .football-stat-box:hover { border-bottom-color: var(--red); background: var(--mid); }
+    .fsb-num {
+      font-family: var(--font-display);
+      font-size: 72px;
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .fsb-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .football-quote {
+      grid-column: span 2;
+      background: var(--grey);
+      padding: 48px;
+      text-align: center;
+      border-left: 3px solid var(--red);
+    }
+    .football-quote blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 3vw, 36px);
+      letter-spacing: 1px;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .football-quote cite {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 20px;
+    }
+
+    /* ── ACHIEVEMENTS ── */
+    .achieve-section { background: var(--dark); }
+    .achieve-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+    .achieve-card {
+      background: var(--grey);
+      padding: 36px 32px;
+      border-top: 2px solid transparent;
+      transition: all var(--transition);
+    }
+    .achieve-card:hover { background: var(--mid); border-top-color: var(--neon); }
+    .achieve-icon { font-size: 32px; margin-bottom: 16px; }
+    .achieve-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .achieve-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .achieve-desc { font-size: 14px; color: #666; line-height: 1.7; }
+
+    @media (max-width: 900px) {
+      .timeline-item { grid-template-columns: 1fr; gap: 12px; }
+      .tl-badge { display: none; }
+      .skills-cols { grid-template-columns: 1fr; gap: 40px; }
+      .football-grid { grid-template-columns: 1fr; }
+      .football-quote { grid-column: span 1; }
+      .achieve-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav class="nav">
+    <a href="../index.html" class="nav-logo">M<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="experience.html" class="active">Experience</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact</a></li>
+    </ul>
+    <div class="nav-burger" id="burger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <header class="page-header">
+    <div class="bg-number">03</div>
+    <div class="page-header-inner">
+      <div class="page-eyebrow">Resume & Experience</div>
+      <h1 class="page-title">WHERE<br>I'VE <span class="outline">BEEN</span></h1>
+      <p class="page-subtitle">
+        From university labs to real customers, football pitches to client calls — 
+        every experience has shaped how I build and think.
+      </p>
+    </div>
+  </header>
+
+  <!-- PROFILE PHOTO BANNER -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--black);">
+    <div style="position:relative;overflow:hidden;background:var(--grey);aspect-ratio:16/7;">
+     
+      <img src="../images/exp-photo1.jpeg" style="width:100%;height:100%;object-fit:cover;object-position:top;" alt="Mohid Waseem" />
+     
+     
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:24px 28px;background:linear-gradient(transparent,rgba(0,0,0,0.85));">
+        <div style="font-family:var(--font-display);font-size:32px;letter-spacing:2px;color:var(--white);">MOHID WASEEM</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:3px;color:var(--neon);text-transform:uppercase;margin-top:4px;">BSc Creative Computing · Developer · Builder</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+      <div style="background:var(--grey);padding:32px;display:flex;flex-direction:column;justify-content:center;border-left:2px solid var(--neon);">
+        <div style="font-family:var(--font-display);font-size:48px;color:var(--neon);line-height:1;">3+</div>
+        <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:6px;">Years Experience</div>
+      </div>
+      <div style="background:var(--grey);padding:32px;display:flex;flex-direction:column;justify-content:center;border-left:2px solid var(--cyan);">
+        <div style="font-family:var(--font-display);font-size:48px;color:var(--cyan);line-height:1;">5+</div>
+        <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:6px;">Roles Held</div>
+      </div>
+      <div style="background:var(--grey);padding:32px;display:flex;flex-direction:column;justify-content:center;border-left:2px solid var(--red);grid-column:span 2;">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-bottom:10px;">Currently Based</div>
+        <div style="font-family:var(--font-display);font-size:32px;color:var(--white);letter-spacing:1px;">DUBAI, UAE</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <section class="section exp-section">
+    <div class="section-label reveal">Professional & Academic</div>
+    <h2 class="section-title reveal">TIMELINE</h2>
+
+    <div class="timeline">
+
+      <!-- BATH SPA UNIVERSITY -->
+      <div class="timeline-item edu reveal">
+        <div class="tl-period"><img src="../images/uni.png" style="width:100%;height:100%;object-fit:cover;object-position:top;" alt="Mohid Waseem" />2023 — 2026</div>
+        <div>
+          <div class="tl-role">BSc Creative Computing</div>
+          <div class="tl-company">Bath Spa University · Hons Degree</div>
+          <div class="tl-desc">
+            Three years building websites, apps, games and digital campaigns.
+            Specialised in creative tech — from frontend development and UI/UX
+            to game design and video production.
+          </div>
+          <div class="tl-tags">
+            <span class="tl-tag">Web Dev</span>
+            <span class="tl-tag">App Dev</span>
+            <span class="tl-tag">Game Design</span>
+            <span class="tl-tag">Video Editing</span>
+            <span class="tl-tag">UI / UX</span>
+          </div>
+        </div>
+        <div class="tl-badge">Education</div>
+      </div>
+
+      <!-- SKECHERS -->
+      <div class="timeline-item reveal">
+        <div class="tl-period"><img src="../images/skechers.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top;" alt="Mohid Waseem" />Aug 2025 — Sep 2025</div>
+        <div>
+          <div class="tl-role">Sales Promoter</div>
+          <div class="tl-company">Skechers · Dubai Hills, Dubai</div>
+          <div class="tl-desc">
+            Promoted products directly to customers, explaining features, benefits and offers.
+            Assisted customers in selecting suitable products and increased sales through
+            engaging demonstrations and upselling. Maintained product displays and monitored inventory.
+          </div>
+          <div class="tl-tags">
+            <span class="tl-tag">Sales</span>
+            <span class="tl-tag">Product Knowledge</span>
+            <span class="tl-tag">Upselling</span>
+            <span class="tl-tag">Inventory</span>
+          </div>
+        </div>
+        <div class="tl-badge">Professional</div>
+      </div>
+
+      <!-- MAZOON DAIRY / GULF FOOD -->
+      <div class="timeline-item reveal">
+        <div class="tl-period"><img src="../images/mazoon.jpeg" style="width:100%;height:100%;object-fit:cover;object-position:top;" alt="Mohid Waseem" />2025 — 2026</div>
+        <div>
+          <div class="tl-role">Exhibitor</div>
+          <div class="tl-company">Mazoon Dairy · Gulf Food 2025/2026 · World Trade Center, Dubai</div>
+          <div class="tl-desc">
+            Dealt with clients, helping them solve their problems.
+            Provided food and drink samples to customers, explained product benefits and descriptions.
+            Supported the team with managing stock and displaying it.
+          </div>
+          <div class="tl-tags">
+            <span class="tl-tag">Client Relations</span>
+            <span class="tl-tag">Product Demo</span>
+            <span class="tl-tag">Stock Management</span>
+          </div>
+        </div>
+        <div class="tl-badge">Professional</div>
+      </div>
+
+      <!-- THREADS UNIFORM -->
+      <div class="timeline-item reveal">
+          <div class="tl-period"><img src="../images/threads.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top;" alt="Mohid Waseem" />2023 — 2025</div>
+        <div>
+          <div class="tl-role">Retail Sales Assistant</div>
+          <div class="tl-company">Threads Uniform · Burjuman, Dubai</div>
+          <div class="tl-desc">
+            Greeted customers, provided product information and assisted with inquiries.
+            Handled cash transactions accurately and resolved customer complaints professionally.
+            Maintained an organised sales floor and delivered exceptional customer service
+            leading to high satisfaction ratings.
+          </div>
+          <div class="tl-tags">
+            <span class="tl-tag">Retail Sales</span>
+            <span class="tl-tag">Cash Handling</span>
+            <span class="tl-tag">Customer Service</span>
+            <span class="tl-tag">Visual Merchandising</span>
+          </div>
+        </div>
+        <div class="tl-badge">Professional</div>
+      </div>
+
+      <!-- TANISHQ -->
+      <div class="timeline-item reveal">
+          <div class="tl-period"><img src="../images/tanishq.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top;" alt="Mohid Waseem" />Apr 2024</div>
+        <div>
+          <div class="tl-role">Customer Support</div>
+          <div class="tl-company">Tanishq · Dubai</div>
+          <div class="tl-desc">
+            Improved communication efficiency by 25% through exceptional multi-channel support
+            via phone and WhatsApp. Resolved customer issues with speed and accuracy,
+            improving satisfaction and retention. Kept customers informed about promotions
+            and order updates through personalised messages.
+          </div>
+          <div class="tl-tags">
+            <span class="tl-tag">Customer Support</span>
+            <span class="tl-tag">WhatsApp CRM</span>
+            <span class="tl-tag">Retention</span>
+          </div>
+        </div>
+        <div class="tl-badge">Professional</div>
+      </div>
+
+      <!-- HOSHAN / CARREFOUR -->
+      <div class="timeline-item reveal">
+          <div class="tl-period"><img src="../images/uni.png" style="width:100%;height:100%;object-fit:cover;object-position:top;" alt="Mohid Waseem" />Jul 2023 — Sep 2023</div>
+        <div>
+          <div class="tl-role">Merchandiser</div>
+          <div class="tl-company">Hoshan Pan Gulf · Carrefour, Dubai</div>
+          <div class="tl-desc">
+            Managed inventory to secure high-performing seasonal collections in line with
+            customer demand. Coordinated in-store displays, produced promotional signage,
+            and analysed sales to identify top-performing products.
+          </div>
+          <div class="tl-tags">
+            <span class="tl-tag">Merchandising</span>
+            <span class="tl-tag">Inventory</span>
+            <span class="tl-tag">Sales Analysis</span>
+            <span class="tl-tag">Displays</span>
+          </div>
+        </div>
+        <div class="tl-badge">Professional</div>
+      </div>
+
+      <!-- VOLUNTEERING — GITEX etc -->
+      <div class="timeline-item reveal">
+          <div class="tl-period"><img src="../images/wtc.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top;" alt="Mohid Waseem" />2024 — 2025</div>
+        <div>
+          <div class="tl-role">Event Operations & Usher</div>
+          <div class="tl-company">Gitex Global · Arab Health · Beauty World · World Trade Center, Dubai</div>
+          <div class="tl-desc">
+            Maintained security measures for a safe viewing experience across major
+            international events. Managed queues, resolved conflicts promptly and
+            established secure work areas with appropriate signage and barriers.
+          </div>
+          <div class="tl-tags">
+            <span class="tl-tag">Event Operations</span>
+            <span class="tl-tag">Crowd Management</span>
+            <span class="tl-tag">Security</span>
+            <span class="tl-tag">Volunteering</span>
+          </div>
+        </div>
+        <div class="tl-badge">Volunteer</div>
+      </div>
+
+      <!-- HIGH SCHOOL -->
+      <div class="timeline-item hs reveal">
+          <div class="tl-period"><img src="../images/hssc.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top;" alt="Mohid Waseem" />Sep 2021 — Jun 2023</div>
+        <div>
+          <div class="tl-role">Higher Secondary School Certificate</div>
+          <div class="tl-company">Pakistan Education Academy · Dubai</div>
+          <div class="tl-desc">
+            Completed Higher Secondary School Certificate with a focus on building
+            the academic foundations that led to a BSc in Creative Computing at
+            Bath Spa University.
+          </div>
+          <div class="tl-tags">
+            <span class="tl-tag">HSSC</span>
+            <span class="tl-tag">Dubai</span>
+          </div>
+        </div>
+        <div class="tl-badge">Education</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section skills-section">
+    <div class="section-label reveal">Competencies</div>
+    <h2 class="section-title reveal">SKILLS &<br>TOOLS</h2>
+    <div class="skills-cols">
+      <div class="reveal">
+        <div class="skill-group-title">Technical</div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>HTML / CSS</span><span>92%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>JavaScript</span><span>80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>App Development</span><span>75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Game Development</span><span>68%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:68%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Video Editing</span><span>78%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="skill-group-title">Soft Skills & Tools</div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Communication & Sales</span><span>90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%;background:linear-gradient(90deg,var(--cyan),var(--neon))"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Team Collaboration</span><span>88%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:88%;background:linear-gradient(90deg,var(--cyan),var(--neon))"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Project Management</span><span>75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:75%;background:linear-gradient(90deg,var(--cyan),var(--neon))"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>UI / UX Design</span><span>70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:70%;background:linear-gradient(90deg,var(--cyan),var(--neon))"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Creative Direction</span><span>80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:80%;background:linear-gradient(90deg,var(--cyan),var(--neon))"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTBALL -->
+  <section class="section football-section">
+    <div class="section-label reveal">Beyond The Desk</div>
+    <h2 class="section-title reveal" style="color:var(--red)">THE<br>PITCH</h2>
+    <div class="football-grid">
+
+      <!-- PHOTO 1 -->
+      <div class="football-stat-box reveal" style="padding:0;overflow:hidden;position:relative;min-height:340px;">
+        
+           <img src="../images/football2.jpeg" style="width:100%;height:100%;object-fit:cover;object-position:center;" alt="Mohid football" />
+       
+        
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 22px;background:linear-gradient(transparent,rgba(0,0,0,0.9));">
+          <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:3px;color:var(--red);text-transform:uppercase;">Competitive Player</div>
+        </div>
+      </div>
+
+      <!-- PHOTO 2 -->
+      <div class="football-stat-box reveal reveal-delay-1" style="padding:0;overflow:hidden;position:relative;min-height:340px;">
+      
+          <img src="../images/football1.png" style="width:100%;height:100%;object-fit:cover;object-position:center;" alt="Mohid football" />
+        
+        
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 22px;background:linear-gradient(transparent,rgba(0,0,0,0.9));">
+          <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:3px;color:var(--red);text-transform:uppercase;">Multi-League Athlete</div>
+        </div>
+      </div>
+
+      <!-- QUOTE -->
+      <div class="football-quote reveal">
+        <blockquote>
+          "The same drive that wins on the pitch builds great software —
+          discipline, teamwork, and performing under pressure."
+        </blockquote>
+        <cite>— Mohid Waseem</cite>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HIGH SCHOOL ACHIEVEMENTS -->
+  <section class="section achieve-section">
+    <div class="section-label reveal">Achievements</div>
+    <h2 class="section-title reveal">HIGHLIGHTS &<br><span class="outline">ACHIEVEMENTS</span></h2>
+    <div class="achieve-grid">
+
+      <!-- ACHIEVEMENT 1 — with image -->
+      <div class="achieve-card reveal" style="padding:0;overflow:hidden;">
+        <div style="width:100%;aspect-ratio:16/9;overflow:hidden;background:#111;display:flex;align-items:center;justify-content:center;position:relative;">
+        
+           <img src="../images/achievement1.jpeg" style="width:100%;height:100%;object-fit:cover;" alt="Achievement 1" />
+          
+          
+        </div>
+        <div style="padding:28px 28px 32px;">
+          <div class="achieve-icon" style="display:none;"></div>
+          <div class="achieve-title">SSC/HSSC COMPLETION</div>
+          <div class="achieve-sub">/ 2019-2023</div>
+          <div class="achieve-desc">Completed secondary and high school with great marks.</div>
+        </div>
+      </div>
+
+      <!-- ACHIEVEMENT 2 — with image -->
+      <div class="achieve-card reveal reveal-delay-1" style="padding:0;overflow:hidden;">
+        <div style="width:100%;aspect-ratio:16/9;overflow:hidden;background:#111;display:flex;align-items:center;justify-content:center;position:relative;">
+          
+            <img src="../images/achievement2.jpeg" style="width:100%;height:100%;object-fit:cover;" alt="Achievement 2" />
+          
+         
+        </div>
+        <div style="padding:28px 28px 32px;">
+          <div class="achieve-title">ACADEMIC EXCELLENCE AWARDEES</div>
+          <div class="achieve-sub">2025 / CREATIVE COMPUTING </div>
+          <div class="achieve-desc">Recieved Award for excellent performance in an academic year.</div>
+        </div>
+      </div>
+
+      <!-- ACHIEVEMENT 3 — with image -->
+      <div class="achieve-card reveal reveal-delay-2" style="padding:0;overflow:hidden;">
+        <div style="width:100%;aspect-ratio:16/9;overflow:hidden;background:#111;display:flex;align-items:center;justify-content:center;position:relative;">
+         
+          <img src="../images/achievement3.jpeg" style="width:100%;height:100%;object-fit:cover;" alt="Achievement 3" />
+         
+          
+        </div>
+        <div style="padding:28px 28px 32px;">
+          <div class="achieve-title">League Awards</div>
+          <div class="achieve-sub">2025/2026</div>
+          <div class="achieve-desc">Being a captain, lead my team to multiple awards.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-logo">M<span>.</span></div>
+    <div class="footer-copy">© 2026 Mohid · All rights reserved</div>
+    <div class="footer-status"><div class="pulse"></div> Open to opportunities</div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

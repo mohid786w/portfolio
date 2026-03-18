@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mohid — Creative Developer</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+      padding-top: 72px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,255,136,0.07) 0%, transparent 65%);
+      top: 50%; right: 5%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 80px 48px 80px 64px;
+      position: relative; z-index: 2;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--neon); margin-bottom: 28px;
+      display: flex; align-items: center; gap: 14px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+    .hero-eyebrow::before { content: ''; width: 36px; height: 1px; background: var(--neon); }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(72px, 9.5vw, 140px);
+      line-height: 0.88; letter-spacing: 3px; margin-bottom: 6px;
+      animation: fadeUp 0.7s ease 0.25s both;
+    }
+    .hero-name .solid  { color: var(--white); display: block; }
+    .hero-name .hollow {
+      color: transparent; -webkit-text-stroke: 1.5px var(--neon);
+      display: block; transition: -webkit-text-stroke-color 0.3s;
+    }
+    .hero-name .hollow:hover { -webkit-text-stroke-color: var(--cyan); }
+    .hero-roles {
+      font-family: var(--font-mono); font-size: 12px; color: var(--muted);
+      letter-spacing: 2px; text-transform: uppercase; margin: 24px 0;
+      display: flex; flex-wrap: wrap; gap: 8px;
+      animation: fadeUp 0.7s ease 0.4s both;
+    }
+    .hero-roles span {
+      padding: 4px 12px; border: 1px solid var(--border);
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .hero-roles span:first-child { border-color: var(--neon); color: var(--neon); }
+    .hero-roles span:hover { border-color: var(--cyan); color: var(--cyan); }
+    .hero-desc {
+      font-size: 16px; color: #777; line-height: 1.85;
+      max-width: 440px; margin-bottom: 44px;
+      animation: fadeUp 0.7s ease 0.5s both;
+    }
+    .hero-desc strong { color: var(--white); font-weight: 500; }
+    .hero-actions {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      animation: fadeUp 0.7s ease 0.6s both;
+    }
+    .hero-right {
+      display: flex; align-items: center; justify-content: center;
+      padding: 80px 48px; position: relative; z-index: 2;
+      animation: fadeUp 0.9s ease 0.4s both;
+    }
+    .hero-frame { position: relative; width: 360px; height: 460px; }
+    .hero-photo {
+      width: 100%; height: 100%; background: var(--grey);
+      clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
+      overflow: hidden; position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-photo-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px; height: 100%;
+    }
+    .hero-photo-placeholder .icon { font-size: 64px; opacity: 0.15; }
+    .hero-photo-placeholder p {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 3px; color: var(--muted); text-transform: uppercase;
+    }
+    .hero-photo::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.6) 100%);
+    }
+    .bracket { position: absolute; width: 22px; height: 22px; }
+    .bracket-tl { top:-5px;left:-5px;border-top:2px solid var(--neon);border-left:2px solid var(--neon); }
+    .bracket-tr { top:-5px;right:-5px;border-top:2px solid var(--neon);border-right:2px solid var(--neon); }
+    .bracket-bl { bottom:-5px;left:-5px;border-bottom:2px solid var(--neon);border-left:2px solid var(--neon); }
+    .bracket-br { bottom:-5px;right:-5px;border-bottom:2px solid var(--neon);border-right:2px solid var(--neon); }
+    .float-card {
+      position: absolute; background: rgba(10,10,10,0.97);
+      border: 1px solid var(--border); padding: 14px 18px;
+      backdrop-filter: blur(12px); animation: float 4s ease-in-out infinite;
+    }
+    .float-card.fc1 { top:48px;left:-72px;border-left:2px solid var(--neon);animation-delay:0s; }
+    .float-card.fc2 { bottom:90px;right:-64px;border-left:2px solid var(--cyan);animation-delay:1.4s; }
+    .float-card.fc3 { bottom:-10px;left:-48px;border-left:2px solid var(--red);animation-delay:2.8s; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .float-num { font-family:var(--font-display);font-size:32px;line-height:1;color:var(--white); }
+    .fc2 .float-num { color:var(--cyan); }
+    .fc3 .float-num { color:var(--red); }
+    .float-label { font-family:var(--font-mono);font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:4px; }
+
+    /* ══════════════════════════════════════════
+       PROJECTS — BENTO GRID
+       Row 1: Website (landscape 7col) + Game (landscape 5col)
+       Row 2: App (portrait 4col)      + Video (square 4col)
+       ══════════════════════════════════════════ */
+    .projects-section { background: var(--dark); }
+    .projects-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; margin-bottom: 48px;
+    }
+    .projects-header .section-title { margin-bottom: 0; }
+
+    /*
+      UNIFIED BENTO — all 4 cards lock into ONE perfect rectangle
+      ┌──────────────────┬──────────────────────────┐
+      │                  │   GAME  (top-right wide)  │
+      │   WEBSITE        ├─────────────┬────────────┤
+      │   (tall left)    │  APP        │  VIDEO     │
+      └──────────────────┴─────────────┴────────────┘
+    */
+    .proj-bento {
+      display: grid;
+      grid-template-columns: 7fr 5fr 5fr;
+      grid-template-rows: 320px 320px;
+      gap: 4px;
+    }
+
+    /* card base — NO aspect-ratio, height locked by grid rows */
+    .proj-card {
+      position: relative; overflow: hidden;
+      background: var(--grey); cursor: none;
+    }
+    .proj-card a.proj-link {
+      position: absolute; inset: 0; z-index: 10;
+    }
+
+    /* exact grid placements */
+    .proj-card.c-web   { grid-column: 1;     grid-row: 1 / 3; } /* spans both rows */
+    .proj-card.c-game  { grid-column: 2 / 4; grid-row: 1;     } /* top-right wide  */
+    .proj-card.c-app   { grid-column: 2;     grid-row: 2;     } /* bottom-middle   */
+    .proj-card.c-video { grid-column: 3;     grid-row: 2;     } /* bottom-right    */
+
+    /* thumbnail */
+    .proj-thumb {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: #111; overflow: hidden; position: relative;
+      transition: transform 0.6s ease;
+    }
+    .proj-thumb video,
+    .proj-thumb img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+    }
+    .proj-card:hover .proj-thumb { transform: scale(1.04); }
+
+    /* placeholder inside empty card */
+    .proj-placeholder {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px;
+      padding: 16px; text-align: center;
+    }
+    .proj-placeholder .ph-icon { font-size: 36px; opacity: 0.12; display: block; }
+    .proj-placeholder p {
+      font-family: var(--font-mono); font-size: 8px;
+      letter-spacing: 2px; color: #2e2e2e; text-transform: uppercase;
+      line-height: 1.7; max-width: 130px;
+    }
+
+    /* overlay */
+    .proj-overlay {
+      position: absolute; inset: 0; z-index: 5;
+      background: linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.15) 55%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 22px 26px; opacity: 0; transition: opacity 0.35s ease;
+    }
+    .proj-card:hover .proj-overlay { opacity: 1; }
+    .proj-type {
+      font-family: var(--font-mono); font-size: 8px; letter-spacing: 3px;
+      color: var(--neon); text-transform: uppercase; margin-bottom: 5px;
+    }
+    .proj-name {
+      font-family: var(--font-display); font-size: 20px;
+      letter-spacing: 1px; color: var(--white); margin-bottom: 5px; line-height: 1.1;
+    }
+    .proj-tech {
+      font-family: var(--font-mono); font-size: 8px;
+      letter-spacing: 2px; color: #666; text-transform: uppercase;
+    }
+    .proj-badge {
+      position: absolute; top: 14px; left: 14px; z-index: 6;
+      background: rgba(0,0,0,0.85); border: 1px solid var(--border);
+      padding: 4px 10px; font-family: var(--font-mono);
+      font-size: 8px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase;
+    }
+    .proj-badge.neon { border-color: var(--neon); color: var(--neon); }
+
+    /* play btn on video card */
+    .proj-play {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 50px; height: 50px;
+      border: 2px solid var(--neon); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--neon); font-size: 16px; z-index: 6;
+      opacity: 0; transition: opacity 0.3s, transform 0.3s;
+    }
+    .proj-card:hover .proj-play { opacity: 1; transform: translate(-50%,-50%) scale(1.12); }
+
+    /* ══════════════════════════
+       CORE SKILLS — IMAGE CARDS
+       ══════════════════════════ */
+    .skills-strip { background: var(--black); }
+    .skills-strip-grid {
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px;
+    }
+    .skill-box {
+      background: var(--grey); border-bottom: 2px solid transparent;
+      transition: all var(--transition); overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .skill-box:hover { background: var(--mid); border-bottom-color: var(--neon); }
+
+    /* image area */
+    .skill-img {
+      width: 100%; aspect-ratio: 4/3; overflow: hidden;
+      background: #111; display: flex; align-items: center; justify-content: center;
+    }
+    .skill-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .skill-box:hover .skill-img img { transform: scale(1.07); }
+    .skill-img .skill-emoji { font-size: 32px; opacity: 0.18; }
+
+    /* label */
+    .skill-label { padding: 14px 10px; text-align: center; }
+    .skill-name-sm {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 2px; color: var(--muted); text-transform: uppercase;
+    }
+    .skill-box:hover .skill-name-sm { color: var(--neon); }
+
+    /* ══════════════════════════
+       MINI ABOUT — with photo
+       ══════════════════════════ */
+    .mini-about {
+      background: var(--dark); display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .mini-about-left {
+      padding: 100px 64px; border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    /* right side: photo (left) + stats (right) in a 2-col sub-grid */
+    .mini-about-right {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+      align-content: stretch;
+    }
+    .about-photo-wrap {
+      grid-column: 1; grid-row: 1 / 4;
+      position: relative; overflow: hidden;
+      background: var(--grey); min-height: 380px;
+    }
+    .about-photo-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      object-position: top; display: block;
+    }
+    .about-photo-placeholder {
+      width: 100%; height: 100%; min-height: 380px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+    }
+    .about-photo-placeholder .icon { font-size: 52px; opacity: 0.1; }
+    .about-photo-placeholder p {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 2px; color: #2e2e2e; text-transform: uppercase; text-align: center;
+    }
+    .about-photo-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      border: 1px solid rgba(0,255,136,0.08); pointer-events: none;
+    }
+    .big-stat {
+      grid-column: 2; background: var(--grey); padding: 28px 24px;
+      display: flex; flex-direction: column; justify-content: center;
+      border-left: 2px solid transparent; transition: border-color var(--transition);
+    }
+    .big-stat:hover { border-left-color: var(--neon); }
+    .big-stat .num {
+      font-family: var(--font-display); font-size: 48px; line-height: 1; color: var(--neon);
+    }
+    .big-stat .lbl {
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 3px;
+      color: var(--muted); text-transform: uppercase; margin-top: 6px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .proj-bento {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 260px 260px 260px;
+      }
+      .proj-card.c-web   { grid-column: 1 / 3; grid-row: 1; }
+      .proj-card.c-game  { grid-column: 1 / 3; grid-row: 2; }
+      .proj-card.c-app   { grid-column: 1;     grid-row: 3; }
+      .proj-card.c-video { grid-column: 2;     grid-row: 3; }
+    }
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 100px 24px 60px; }
+      .proj-bento {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 220px);
+      }
+      .proj-card.c-web, .proj-card.c-game,
+      .proj-card.c-app, .proj-card.c-video {
+        grid-column: 1; grid-row: auto;
+      }
+      .skills-strip-grid { grid-template-columns: repeat(3,1fr); }
+      .mini-about { grid-template-columns: 1fr; }
+      .mini-about-left { border-right:none;border-bottom:1px solid var(--border);padding:60px 24px; }
+      .mini-about-right { grid-template-columns:1fr; }
+      .about-photo-wrap { grid-row: auto; min-height: 260px; }
+      .big-stat { grid-column: 1; }
+      .projects-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">M<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="pages/work.html">Work</a></li>
+      <li><a href="pages/experience.html">Experience</a></li>
+      <li><a href="pages/about.html">About</a></li>
+      <li><a href="pages/contact.html" class="nav-cta">Contact</a></li>
+    </ul>
+    <div class="nav-burger" id="burger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-left">
+      <p class="hero-eyebrow">Available for hire · BSc Creative Computing</p>
+      <h1 class="hero-name">
+        <span class="solid">MOHID</span>
+        <span class="hollow">WASEEM</span>
+      </h1>
+      <div class="hero-roles">
+        <span>Developer</span><span>Designer</span>
+        <span>Builder</span><span>Footballer</span>
+      </div>
+      <p class="hero-desc">
+        I build things that live on screens — <strong>websites, apps, games,</strong> and experiences.
+        A BSc Creative Computing graduate driven by bold ideas, clean code, and the same
+        discipline that keeps me competing on the football pitch.
+      </p>
+      <div class="hero-actions">
+        <a href="pages/work.html" class="btn btn-neon">View My Work →</a>
+        <a href="pages/contact.html" class="btn btn-outline">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-frame">
+        <div class="bracket bracket-tl"></div>
+        <div class="bracket bracket-tr"></div>
+        <div class="bracket bracket-bl"></div>
+        <div class="bracket bracket-br"></div>
+        <div class="hero-photo">
+          <img src="images/main.png" alt="Mohid Waseem" />
+        </div>
+        <div class="float-card fc1"><div class="float-num">10+</div><div class="float-label">Projects Built</div></div>
+        <div class="float-card fc2"><div class="float-num">3+</div><div class="float-label">Yrs Experience</div></div>
+        <div class="float-card fc3"><div class="float-num">⚽</div><div class="float-label">League Player</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item">Web Development</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">App Development</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">Game Design</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">Video Editing</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">Creative Computing</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">Customer Sales</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">Football Athlete</span><span class="ticker-sep">✦</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       WHAT I'VE BUILT — BENTO GRID
+       Row 1 │ WEBSITE (16:9, 7col) │ GAME (16:9, 5col)
+       Row 2 │ APP (9:16, 4col)     │ VIDEO (1:1, 4col)
+       ═══════════════════════════════════════════ -->
+  <section class="section projects-section">
+    <div class="projects-header">
+      <div>
+        <div class="section-label">Selected Work</div>
+        <h2 class="section-title">WHAT I'VE<br>BUILT</h2>
+      </div>
+      <a href="pages/work.html" class="btn btn-outline reveal">View All Projects →</a>
+    </div>
+
+    <div class="proj-bento">
+
+      <!-- ── WEBSITE — landscape 16:9 ── -->
+        <div class="proj-card c-web reveal">
+           
+            <a class="proj-link" href="https://mohid786w.github.io/lajoie-website/Homepage/homepage.html" target="_blank" rel="noopener"></a>
+            <div class="proj-thumb">
+
+                <video src="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404348/website1_rgnyge.mp4" autoplay muted loop playsinline></video>
+
+                <div class="proj-placeholder">
+                   
+                </div>
+            </div>
+            <div class="proj-badge neon">Web ↗</div>
+            <div class="proj-overlay">
+                <div class="proj-type">Web Development · Live Site</div>
+                <div class="proj-name">LA JOIE REAL ESTATE WEBSITE</div>
+                <div class="proj-tech">HTML · CSS · JavaScript</div>
+            </div>
+        </div>
+
+      <!-- ── GAME — landscape 16:9 ── -->
+        <div class="proj-card c-game reveal reveal-delay-1">
+            <a class="proj-link" href="https://mohid-waseem.itch.io/land-escape" target="_blank" rel="noopener"></a> 
+            <div class="proj-thumb">
+                 Video: <video src="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404423/game_ssyojy.mp4" autoplay muted loop playsinline></video>
+                         
+                <div class="proj-placeholder">
+                    
+                </div>
+            </div>
+            <div class="proj-badge neon">Game ↗</div>
+            <div class="proj-overlay">
+                <div class="proj-type">Game Development</div>
+                <div class="proj-name">LandEscape 2D GAME</div>
+                <div class="proj-tech">Unity · C#</div>
+            </div>
+        </div>
+
+      <!-- ── APP — portrait 9:16 (phone-shaped) ── -->
+      <div class="proj-card c-app reveal">
+        <a class="proj-link" href="https://appetize.io/app/b_65zr5nuq55vo3vwx4gl2c6f5tm" target="_blank" rel="noopener"></a>
+        <div class="proj-thumb">
+           <video src="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404568/Fashionfusion_buxvjy.mp4" autoplay muted loop playsinline></video>
+               
+          <div class="proj-placeholder">
+            
+          </div>
+        </div>
+        <div class="proj-badge neon">App ↗</div>
+        <div class="proj-overlay">
+          <div class="proj-type">App Development</div>
+          <div class="proj-name">FashionFusion</div>
+          <div class="proj-tech">React Native · Android Studio</div>
+        </div>
+      </div>
+
+      <!-- ── VIDEO — square 1:1 ── -->
+      <div class="proj-card c-video reveal reveal-delay-1">
+      
+        <div class="proj-thumb">
+          Video: <video src="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404606/video_txnc5s.mp4" autoplay muted loop playsinline></video>
+             
+          <div class="proj-placeholder">
+            
+          </div>
+        </div>
+        <div class="proj-play">▶</div>
+        <div class="proj-badge neon">Video ↗</div>
+        <div class="proj-overlay">
+          <div class="proj-type">Video Editing</div>
+          <div class="proj-name">Cristiano Ronaldo Winning Moments</div>
+          <div class="proj-tech">Premiere Pro · After Effects</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════
+       CORE SKILLS — IMAGE CARDS
+       ════════════════════════════ -->
+  <section class="section-sm skills-strip">
+    <div class="section-label reveal">Core Skills</div>
+    <div class="skills-strip-grid">
+
+      <div class="skill-box reveal reveal-delay-1">
+        <div class="skill-img">
+          <img src="images/webdev.jpg" alt="Web Development" /> 
+        
+        </div>
+        <div class="skill-label"><div class="skill-name-sm">Web Dev</div></div>
+      </div>
+
+      <div class="skill-box reveal reveal-delay-2">
+        <div class="skill-img">
+          <img src="images/appdev.jpg" alt="App Development" />
+          
+        </div>
+        <div class="skill-label"><div class="skill-name-sm">App Dev</div></div>
+      </div>
+
+      <div class="skill-box reveal reveal-delay-1">
+        <div class="skill-img">
+          <img src="images/gamedev.jpg" alt="Game Development" /> 
+          
+        </div>
+        <div class="skill-label"><div class="skill-name-sm">Game Dev</div></div>
+      </div>
+
+      <div class="skill-box reveal reveal-delay-2">
+        <div class="skill-img">
+          <img src="images/videoedit.jpg" alt="Video Editing" /> 
+          
+        </div>
+        <div class="skill-label"><div class="skill-name-sm">Video Edit</div></div>
+      </div>
+
+      <div class="skill-box reveal reveal-delay-3">
+        <div class="skill-img">
+           <img src="images/ui.jpg" alt="UI Design" />
+          
+        </div>
+        <div class="skill-label"><div class="skill-name-sm">UI Design</div></div>
+      </div>
+
+      <div class="skill-box reveal reveal-delay-4">
+        <div class="skill-img">
+           <img src="images/sales.jpeg" alt="Sales" /> 
+         
+        </div>
+        <div class="skill-label"><div class="skill-name-sm">Sales</div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       MINI ABOUT — photo left, stats right
+       ════════════════════════════════════ -->
+  <section class="mini-about">
+    <div class="mini-about-left reveal">
+      <div class="section-label">About Me</div>
+      <h2 class="section-title">THE<br>BUILDER</h2>
+      <p style="font-size:16px;color:var(--muted);line-height:1.9;max-width:440px;margin-bottom:32px;">
+        I'm Mohid — a Creative Computing graduate who codes first.
+        Football taught me discipline and teamwork. Sales taught me how people
+        think. Code is how I bring it all together.
+      </p>
+      <a href="pages/about.html" class="btn btn-outline">More About Me →</a>
+    </div>
+
+    <div class="mini-about-right">
+
+    
+      <div class="about-photo-wrap reveal">
+       
+        <img src="images/main2.jpeg" alt="Mohid Waseem" /> 
+        
+      </div>
+
+      <!-- STATS stacked in right column -->
+      <div class="big-stat reveal reveal-delay-1">
+        <div class="num">10+</div>
+        <div class="lbl">Projects Completed</div>
+      </div>
+      <div class="big-stat reveal reveal-delay-2">
+        <div class="num">3+</div>
+        <div class="lbl">Years Experience</div>
+      </div>
+      <div class="big-stat reveal reveal-delay-3">
+        <div class="num" style="color:var(--red);">⚽</div>
+        <div class="lbl">Leagues Played</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">M<span>.</span></div>
+    <div class="footer-copy">© 2026 Mohid · All rights reserved</div>
+    <div class="footer-status"><div class="pulse"></div> Open to opportunities</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

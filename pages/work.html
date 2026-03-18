@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work — Mohid</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      padding: 28px 48px; display: flex; gap: 8px;
+      flex-wrap: wrap; border-bottom: 1px solid var(--border);
+      background: var(--dark);
+    }
+    .filter-btn {
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 2.5px;
+      text-transform: uppercase; padding: 8px 18px;
+      border: 1px solid var(--border); color: var(--muted);
+      background: transparent; cursor: none; transition: all var(--transition);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--neon); color: var(--neon);
+      background: rgba(0,255,136,0.05);
+    }
+
+    /* ════════════════════════════════════
+       WORK GRID — 12 column bento
+       ════════════════════════════════════ */
+    .work-section { background: var(--black); }
+
+
+
+
+    /* WEBSITES grid */
+    .work-bento.grid-web {
+      display: grid;
+      grid-template-columns: 5fr 3fr 4fr;
+      grid-template-rows: 280px 220px;
+      gap: 4px;
+    }
+    .work-bento.grid-web .work-card.w-web-1 { grid-column: 1;     grid-row: 1 / 3; }
+    .work-bento.grid-web .work-card.w-web-2 { grid-column: 2;     grid-row: 1; }
+    .work-bento.grid-web .work-card.w-web-3 { grid-column: 3;     grid-row: 1; }
+    .work-bento.grid-web .work-card.w-web-4 { grid-column: 2 / 4; grid-row: 2; }
+
+    /* GAME grid */
+    .work-bento.grid-game {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 600px;
+      gap: 4px;
+    }
+
+    /* APPS grid — 3 portrait cards same height, side by side */
+    .work-bento.grid-apps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 520px;
+      gap: 4px;
+    }
+
+    /* VIDEOS grid — 2 square cards side by side */
+    .work-bento.grid-videos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 800px;
+      gap: 4px;
+    }
+
+    /* card base — no aspect-ratio, height driven by grid rows */
+    .work-card {
+      position: relative; overflow: hidden;
+      background: var(--grey); cursor: none;
+    }
+    .work-card a.work-link {
+      position: absolute; inset: 0; z-index: 10;
+    }
+
+    /* ── thumbnail ── */
+    .work-thumb {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: #111; overflow: hidden; position: relative;
+      transition: transform 0.6s ease;
+    }
+    .work-thumb video,
+    .work-thumb img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+    }
+    .work-card:hover .work-thumb { transform: scale(1.04); }
+
+    /* placeholder */
+    .work-placeholder {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 10px; padding: 16px; text-align: center;
+    }
+    .work-placeholder .ph-icon { font-size: 36px; opacity: 0.1; display: block; }
+    .work-placeholder p {
+      font-family: var(--font-mono); font-size: 8px;
+      letter-spacing: 2px; color: #2a2a2a; text-transform: uppercase;
+      line-height: 1.7; max-width: 120px;
+    }
+
+    /* ── overlay ── */
+    .work-overlay {
+      position: absolute; inset: 0; z-index: 5;
+      background: linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.1) 55%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 22px 26px; opacity: 0; transition: opacity 0.35s ease;
+    }
+    .work-card:hover .work-overlay { opacity: 1; }
+
+    .work-cat {
+      font-family: var(--font-mono); font-size: 8px; letter-spacing: 3px;
+      color: var(--neon); text-transform: uppercase; margin-bottom: 5px;
+    }
+    .work-title {
+      font-family: var(--font-display); font-size: 22px;
+      letter-spacing: 1px; color: var(--white); margin-bottom: 6px; line-height: 1.1;
+    }
+    .work-desc {
+      font-size: 13px; color: #777; line-height: 1.55; margin-bottom: 12px;
+    }
+    .work-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .work-tag {
+      font-family: var(--font-mono); font-size: 7px;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 3px 8px; border: 1px solid #333; color: #555;
+    }
+    .work-tag.live { border-color: var(--neon); color: var(--neon); }
+
+    /* badge */
+    .work-badge {
+      position: absolute; top: 14px; left: 14px; z-index: 6;
+      background: rgba(0,0,0,0.88); border: 1px solid var(--neon);
+      padding: 4px 10px; font-family: var(--font-mono);
+      font-size: 8px; letter-spacing: 2px; color: var(--neon); text-transform: uppercase;
+    }
+    .work-badge.grey { border-color: var(--border); color: var(--muted); }
+
+    /* play icon */
+    .work-play {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 52px; height: 52px; border: 2px solid var(--neon);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      color: var(--neon); font-size: 18px; z-index: 6;
+      opacity: 0; transition: opacity 0.3s, transform 0.3s;
+    }
+    .work-card:hover .work-play { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
+
+    /* section dividers */
+    .work-group-label {
+      padding: 48px 0 20px;
+      font-family: var(--font-display);
+      font-size: 13px; letter-spacing: 6px;
+      color: var(--muted); text-transform: uppercase;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .work-group-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    @media (max-width: 900px) {
+      .work-bento.grid-web {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 220px 220px 220px;
+      }
+      .work-bento.grid-web .work-card.w-web-1 { grid-column: 1 / 3; grid-row: 1; }
+      .work-bento.grid-web .work-card.w-web-2 { grid-column: 1;     grid-row: 2; }
+      .work-bento.grid-web .work-card.w-web-3 { grid-column: 2;     grid-row: 2; }
+      .work-bento.grid-web .work-card.w-web-4 { grid-column: 1 / 3; grid-row: 3; }
+      .work-bento.grid-apps { grid-template-rows: 380px; }
+      .work-bento.grid-videos { grid-template-rows: 300px; }
+      .work-bento.grid-game { grid-template-rows: 280px; }
+    }
+    @media (max-width: 600px) {
+      .filter-bar { padding: 20px 24px; }
+      .work-bento.grid-web {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 200px);
+      }
+      .work-bento.grid-web .work-card.w-web-1,
+      .work-bento.grid-web .work-card.w-web-2,
+      .work-bento.grid-web .work-card.w-web-3,
+      .work-bento.grid-web .work-card.w-web-4 {
+        grid-column: 1; grid-row: auto;
+      }
+      .work-bento.grid-apps { grid-template-columns: 1fr; grid-template-rows: repeat(3, 200px); }
+      .work-bento.grid-videos { grid-template-columns: 1fr; grid-template-rows: repeat(2, 220px); }
+      .work-bento.grid-game { grid-template-rows: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav class="nav">
+    <a href="../index.html" class="nav-logo">M<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="work.html" class="active">Work</a></li>
+      <li><a href="experience.html">Experience</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact</a></li>
+    </ul>
+    <div class="nav-burger" id="burger"><span></span><span></span><span></span></div>
+  </nav>
+
+  
+  <header class="page-header">
+    <div class="bg-number">02</div>
+    <div class="page-header-inner">
+      <div class="page-eyebrow">All Projects</div>
+      <h1 class="page-title">WHAT<br>I'VE <span class="outline">BUILT</span></h1>
+      <p class="page-subtitle">
+        4 websites, 3 apps, 1 game and many video edits. Everything starts with a 
+        problem worth solving and ends with something worth showing.
+      </p>
+    </div>
+  </header>
+
+  
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="web">Websites</button>
+    <button class="filter-btn" data-filter="app">Apps</button>
+    <button class="filter-btn" data-filter="game">Game</button>
+    <button class="filter-btn" data-filter="video">Video</button>
+  </div>
+
+  
+  <section class="work-section section">
+
+      <!-- ── WEBSITES — forms one unified rectangle ── -->
+      <div class="work-group-label reveal" data-group="web">Websites</div>
+      <div class="work-bento grid-web">
+
+          <div class="work-card w-web-1 reveal" data-cat="web">
+              <a class="work-link" href="https://mohid786w.github.io/lajoie-website/Homepage/homepage.html" target="_blank" rel="noopener"></a>
+              <div class="work-thumb">
+                  <video src="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404348/website1_rgnyge.mp4" autoplay muted loop playsinline></video>
+
+
+              </div>
+              <div class="work-badge">Web · Featured</div>
+              <div class="work-overlay">
+                  <div class="work-cat">Web Development · Live ↗</div>
+                  <div class="work-title">LA JOIE REAL ESTATE WEBSITE</div>
+                  <div class="work-desc">Website containing information about communities and properties available in UAE.</div>
+                  <div class="work-tags">
+                      <span class="work-tag">HTML</span><span class="work-tag">CSS</span><span class="work-tag">JS</span>
+                      <a href="#" class="work-tag live" target="_blank">Live ↗</a>
+                  </div>
+              </div>
+          </div>
+
+          <div class="work-card w-web-2 reveal reveal-delay-1" data-cat="web">
+              <a class="work-link" href="https://pakvoyage1.vercel.app/" target="_blank" rel="noopener"></a>
+              <div class="work-thumb">
+                  <video src="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404444/Pakvoyage_sieh8r.mp4" autoplay muted loop playsinline></video>
+
+              </div>
+              <div class="work-badge">Web</div>
+              <div class="work-overlay">
+                  <div class="work-cat">Web Development</div>
+                  <div class="work-title">PAKVOYAGE</div>
+                  <div class="work-desc">A travel platform for exploring Pakistan — trips, offers, and heritage destinations.</div>
+                  <div class="work-tags">
+                      <span class="work-tag">HTML</span><span class="work-tag">CSS</span><span class="work-tag">JS</span>
+                      <a href="https://pakvoyage1.vercel.app/" class="work-tag live" target="_blank">Live ↗</a>
+                  </div>
+              </div>
+          </div>
+
+          <div class="work-card w-web-3 reveal reveal-delay-2" data-cat="web">
+              <a class="work-link" href="https://mohid786w.github.io/task2/" target="_blank" rel="noopener"></a>
+              <div class="work-thumb">
+                  <img src="../images/movie.jpg" alt="Game preview" />
+
+              </div>
+              <div class="work-badge">Web</div>
+              <div class="work-overlay">
+                  <div class="work-cat">Web Development</div>
+                  <div class="work-title">WATCH IT</div>
+                  <div class="work-desc">Simple Responsive Webpage about movies.</div>
+                  <div class="work-tags">
+                      <span class="work-tag">HTML</span><span class="work-tag">CSS</span><span class="work-tag">JS</span>
+                      <a href="#" class="work-tag live" target="_blank">Live ↗</a>
+                  </div>
+              </div>
+          </div>
+
+          <div class="work-card w-web-4 reveal" data-cat="web">
+              <a class="work-link" href="https://mohid786w.github.io/task1/" target="_blank" rel="noopener"></a>
+              <div class="work-thumb">
+                  <img src="../images/blog.jpg" alt="Game preview" />
+              </div>
+              <div class="work-badge">Web</div>
+              <div class="work-overlay">
+                  <div class="work-cat">Web Development</div>
+                  <div class="work-title">Responsive Blog</div>
+                  <div class="work-desc">Erased Tapes: Exploring the Sonic Frontier</div>
+                  <div class="work-tags">
+                      <span class="work-tag">HTML</span><span class="work-tag">CSS</span><span class="work-tag">JS</span>
+                      <a href="#" class="work-tag live" target="_blank">Live ↗</a>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+
+      <!-- ── GAME — single full-width block ── -->
+      <div class="work-group-label reveal" data-group="game">Game</div>
+      <div class="work-bento grid-game">
+
+          <div class="work-card reveal" data-cat="game">
+              <a class="work-link" href="https://mohid-waseem.itch.io/land-escape" target="_blank" rel="noopener"></a>
+              <div class="work-thumb">
+                  <video src="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404423/game_ssyojy.mp4" autoplay muted loop playsinline></video>
+
+
+              </div>
+              <div class="work-badge">Game</div>
+              <div class="work-overlay">
+                  <div class="work-cat">Game Development · Play ↗</div>
+                  <div class="work-title">LandEscape 2D</div>
+                  <div class="work-desc">A 2D Adventure Game.</div>
+                  <div class="work-tags">
+                      <span class="work-tag">Unity</span><span class="work-tag">C#</span>
+                      <a href="#" class="work-tag live" target="_blank">Play ↗</a>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+
+      <!-- ── APPS — 3 portrait cards, one unified block ── -->
+      <div class="work-group-label reveal" data-group="app">Apps</div>
+      <div class="work-bento grid-apps">
+
+          <div class="work-card reveal" data-cat="app">
+              <a class="work-link" href="https://appetize.io/app/b_65zr5nuq55vo3vwx4gl2c6f5tm" target="_blank" rel="noopener"></a>
+              <div class="work-thumb">
+
+                  <video src="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404568/Fashionfusion_buxvjy.mp4" autoplay muted loop playsinline></video>
+
+              </div>
+              <div class="work-badge">App</div>
+              <div class="work-overlay">
+                  <div class="work-cat">App Development</div>
+                  <div class="work-title">FashionFusion</div>
+                  <div class="work-desc">An Online shopping Platform.</div>
+                  <div class="work-tags">
+                      <span class="work-tag">React Native</span>
+                      <a href="#" class="work-tag live" target="_blank">View ↗</a>
+                  </div>
+              </div>
+          </div>
+
+          <div class="work-card reveal reveal-delay-1" data-cat="app">
+              <a class="work-link" href="https://appetize.io/app/b_4te374cyfqufnnxjerbqh4jm4i" target="_blank" rel="noopener"></a>
+              <div class="work-thumb">
+                  <video src="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404543/Fitgoal_frg0ie.mp4" autoplay muted loop playsinline></video>
+
+              </div>
+              <div class="work-badge">App</div>
+              <div class="work-overlay">
+                  <div class="work-cat">App Development</div>
+                  <div class="work-title">FitGoal+</div>
+                  <div class="work-desc">App that provides fitness tips.</div>
+                  <div class="work-tags">
+                      <span class="work-tag">JavaScript</span>
+                      <a href="#" class="work-tag live" target="_blank">View ↗</a>
+                  </div>
+              </div>
+          </div>
+
+          <div class="work-card reveal reveal-delay-2" data-cat="app">
+              <a class="work-link" href="https://appetize.io/app/b_4532fk2fym3daeuvq4dtfdn5su" target="_blank" rel="noopener"></a>
+              <div class="work-thumb">
+                  <video src="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404391/careercalculator_l1mcej.mp4" autoplay muted loop playsinline></video>
+              </div>
+              <div class="work-badge">App</div>
+              <div class="work-overlay">
+                  <div class="work-cat">App Development</div>
+                  <div class="work-title">CAREER PATH CALCULATOR</div>
+                  <div class="work-desc">Decide your Career based on your Interests.</div>
+                  <div class="work-tags">
+                      <span class="work-tag">Firebase</span>
+                      <a href="#" class="work-tag live" target="_blank">View ↗</a>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+
+      <!-- ── VIDEOS — 2 square cards, one unified block ── -->
+      <div class="work-group-label reveal" data-group="video">Video Edits</div>
+      <div class="work-bento grid-videos">
+
+          <div class="work-card reveal" data-cat="video">
+              <a class="work-link" href="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404606/video_txnc5s.mp4" target="_blank" rel="noopener"></a>
+              <div class="work-thumb">
+                  <video src="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404606/video_txnc5s.mp4" autoplay muted loop playsinline></video>
+
+
+              </div>
+              <div class="work-play">▶</div>
+              <div class="work-badge">Video</div>
+              <div class="work-overlay">
+                  <div class="work-cat">Video Editing</div>
+                  <div class="work-title">Cristiano Ronaldo Winning Moments</div>
+                  <div class="work-desc">Video edit for social media content.</div>
+                  <div class="work-tags">
+                      <span class="work-tag">Premiere Pro</span>
+                      <a href="#" class="work-tag live" target="_blank">Watch ↗</a>
+                  </div>
+              </div>
+          </div>
+
+          <div class="work-card reveal reveal-delay-1" data-cat="video">
+              <a class="work-link" href="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404583/video1_xpulqb.mp4" target="_blank" rel="noopener"></a>
+              <div class="work-thumb">
+                  <video src="https://res.cloudinary.com/daq1yhs7v/video/upload/v1773404583/video1_xpulqb.mp4" autoplay muted loop playsinline></video>
+
+              </div>
+              <div class="work-play">▶</div>
+              <div class="work-badge">Video</div>
+              <div class="work-overlay">
+                  <div class="work-cat">Video Editing</div>
+                  <div class="work-title">My Football Edit</div>
+                  <div class="work-desc">Editing my own football videos for social media accounts.</div>
+                  <div class="work-tags">
+                      <span class="work-tag">After Effects</span>
+                      <a href="#" class="work-tag live" target="_blank">Watch ↗</a>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">M<span>.</span></div>
+    <div class="footer-copy">© 2026 Mohid · All rights reserved</div>
+    <div class="footer-status"><div class="pulse"></div> Open to opportunities</div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Filter — shows/hides cards and group labels
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      filterBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+              filterBtns.forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              const filter = btn.dataset.filter;
+              document.querySelectorAll('.work-group-label').forEach(label => {
+                  const bento = label.nextElementSibling;
+                  const groupCat = label.dataset.group;
+                  if (filter === 'all' || groupCat === filter) {
+                      label.style.display = '';
+                      if (bento) bento.style.display = '';
+                  } else {
+                      label.style.display = 'none';
+                      if (bento) bento.style.display = 'none';
+                  }
+              });
+          });
+      });
+  </script>
+</body>
+</html>
