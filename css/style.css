@@ -1,6 +1,4 @@
-/* ============================================
-   MOHID PORTFOLIO — GLOBAL STYLES
-   ============================================ */
+
 
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 
@@ -23,7 +21,7 @@
     --radius: 0px;
 }
 
-/* RESET */
+
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -58,7 +56,6 @@ img {
     display: block;
 }
 
-/* NOISE TEXTURE OVERLAY */
 body::after {
     content: '';
     position: fixed;
@@ -69,9 +66,6 @@ body::after {
     opacity: 0.5;
 }
 
-/* ============================================
-   CUSTOM CURSOR
-   ============================================ */
 .cursor {
     width: 10px;
     height: 10px;
@@ -108,9 +102,7 @@ body::after {
     opacity: 0.2;
 }
 
-/* ============================================
-   NAVIGATION
-   ============================================ */
+
 .nav {
     position: fixed;
     top: 0;
@@ -219,9 +211,7 @@ body::after {
         transition: all var(--transition);
     }
 
-/* ============================================
-   PAGE HEADER (inner pages)
-   ============================================ */
+
 .page-header {
     padding: 160px 48px 80px;
     position: relative;
@@ -282,7 +272,7 @@ body::after {
     margin-top: 28px;
 }
 
-/* BIG BG NUMBER */
+
 .bg-number {
     position: absolute;
     right: 48px;
@@ -296,9 +286,7 @@ body::after {
     user-select: none;
 }
 
-/* ============================================
-   SECTION UTILITIES
-   ============================================ */
+
 .section {
     padding: 100px 48px;
 }
@@ -335,9 +323,7 @@ body::after {
     margin-bottom: 60px;
 }
 
-/* ============================================
-   BUTTONS
-   ============================================ */
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -373,9 +359,7 @@ body::after {
         color: var(--neon);
     }
 
-/* ============================================
-   TICKER
-   ============================================ */
+
 .ticker-wrap {
     overflow: hidden;
     background: var(--neon);
@@ -414,9 +398,6 @@ body::after {
     }
 }
 
-/* ============================================
-   CARDS
-   ============================================ */
 .card {
     background: var(--grey);
     border: 1px solid var(--border);
@@ -428,9 +409,7 @@ body::after {
         transform: translateY(-4px);
     }
 
-/* ============================================
-   FOOTER
-   ============================================ */
+
 .footer {
     background: var(--grey);
     border-top: 1px solid var(--border);
@@ -492,9 +471,7 @@ body::after {
     }
 }
 
-/* ============================================
-   SCROLL REVEAL
-   ============================================ */
+
 .reveal {
     opacity: 0;
     transform: translateY(28px);
@@ -522,11 +499,9 @@ body::after {
     transition-delay: 0.4s;
 }
 
-/* ============================================
-   RESPONSIVE — COMPREHENSIVE MOBILE FIRST
-   ============================================ */
 
-/* Hide custom cursor on touch devices */
+
+
 @media (hover: none) {
     .cursor, .cursor-ring {
         display: none;
