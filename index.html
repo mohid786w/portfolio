@@ -6,7 +6,7 @@
   <title>Mohid — Creative Developer</title>
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    /* ── HERO ── */
+  
     .hero {
       min-height: 100vh;
       display: grid;
@@ -123,11 +123,7 @@
     .fc3 .float-num { color:var(--red); }
     .float-label { font-family:var(--font-mono);font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:4px; }
 
-    /* ══════════════════════════════════════════
-       PROJECTS — BENTO GRID
-       Row 1: Website (landscape 7col) + Game (landscape 5col)
-       Row 2: App (portrait 4col)      + Video (square 4col)
-       ══════════════════════════════════════════ */
+   
     .projects-section { background: var(--dark); }
     .projects-header {
       display: flex; justify-content: space-between;
@@ -135,14 +131,7 @@
     }
     .projects-header .section-title { margin-bottom: 0; }
 
-    /*
-      UNIFIED BENTO — all 4 cards lock into ONE perfect rectangle
-      ┌──────────────────┬──────────────────────────┐
-      │                  │   GAME  (top-right wide)  │
-      │   WEBSITE        ├─────────────┬────────────┤
-      │   (tall left)    │  APP        │  VIDEO     │
-      └──────────────────┴─────────────┴────────────┘
-    */
+   
     .proj-bento {
       display: grid;
       grid-template-columns: 7fr 5fr 5fr;
@@ -150,7 +139,6 @@
       gap: 4px;
     }
 
-    /* card base — NO aspect-ratio, height locked by grid rows */
     .proj-card {
       position: relative; overflow: hidden;
       background: var(--grey); cursor: none;
@@ -160,10 +148,10 @@
     }
 
     /* exact grid placements */
-    .proj-card.c-web   { grid-column: 1;     grid-row: 1 / 3; } /* spans both rows */
-    .proj-card.c-game  { grid-column: 2 / 4; grid-row: 1;     } /* top-right wide  */
-    .proj-card.c-app   { grid-column: 2;     grid-row: 2;     } /* bottom-middle   */
-    .proj-card.c-video { grid-column: 3;     grid-row: 2;     } /* bottom-right    */
+    .proj-card.c-web   { grid-column: 1;     grid-row: 1 / 3; } 
+    .proj-card.c-game  { grid-column: 2 / 4; grid-row: 1;     } 
+    .proj-card.c-app   { grid-column: 2;     grid-row: 2;     } 
+    .proj-card.c-video { grid-column: 3;     grid-row: 2;     } 
 
     /* thumbnail */
     .proj-thumb {
@@ -180,7 +168,7 @@
     }
     .proj-card:hover .proj-thumb { transform: scale(1.04); }
 
-    /* placeholder inside empty card */
+    
     .proj-placeholder {
       position: relative; z-index: 1;
       display: flex; flex-direction: column;
@@ -234,9 +222,7 @@
     }
     .proj-card:hover .proj-play { opacity: 1; transform: translate(-50%,-50%) scale(1.12); }
 
-    /* ══════════════════════════
-       CORE SKILLS — IMAGE CARDS
-       ══════════════════════════ */
+ 
     .skills-strip { background: var(--black); }
     .skills-strip-grid {
       display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px;
@@ -268,9 +254,7 @@
     }
     .skill-box:hover .skill-name-sm { color: var(--neon); }
 
-    /* ══════════════════════════
-       MINI ABOUT — with photo
-       ══════════════════════════ */
+   
     .mini-about {
       background: var(--dark); display: grid;
       grid-template-columns: 1fr 1fr;
@@ -279,7 +263,7 @@
       padding: 100px 64px; border-right: 1px solid var(--border);
       display: flex; flex-direction: column; justify-content: center;
     }
-    /* right side: photo (left) + stats (right) in a 2-col sub-grid */
+ 
     .mini-about-right {
       display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
       align-content: stretch;
@@ -429,11 +413,7 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════
-       WHAT I'VE BUILT — BENTO GRID
-       Row 1 │ WEBSITE (16:9, 7col) │ GAME (16:9, 5col)
-       Row 2 │ APP (9:16, 4col)     │ VIDEO (1:1, 4col)
-       ═══════════════════════════════════════════ -->
+ 
   <section class="section projects-section">
     <div class="projects-header">
       <div>
@@ -445,7 +425,7 @@
 
     <div class="proj-bento">
 
-      <!-- ── WEBSITE — landscape 16:9 ── -->
+     
         <div class="proj-card c-web reveal">
            
             <a class="proj-link" href="https://mohid786w.github.io/lajoie-website/Homepage/homepage.html" target="_blank" rel="noopener"></a>
@@ -465,7 +445,6 @@
             </div>
         </div>
 
-      <!-- ── GAME — landscape 16:9 ── -->
         <div class="proj-card c-game reveal reveal-delay-1">
             <a class="proj-link" href="https://mohid-waseem.itch.io/land-escape" target="_blank" rel="noopener"></a> 
             <div class="proj-thumb">
@@ -483,7 +462,7 @@
             </div>
         </div>
 
-      <!-- ── APP — portrait 9:16 (phone-shaped) ── -->
+      
       <div class="proj-card c-app reveal">
         <a class="proj-link" href="https://appetize.io/app/b_65zr5nuq55vo3vwx4gl2c6f5tm" target="_blank" rel="noopener"></a>
         <div class="proj-thumb">
@@ -501,7 +480,7 @@
         </div>
       </div>
 
-      <!-- ── VIDEO — square 1:1 ── -->
+   
       <div class="proj-card c-video reveal reveal-delay-1">
       
         <div class="proj-thumb">
@@ -523,9 +502,6 @@
     </div>
   </section>
 
-  <!-- ════════════════════════════
-       CORE SKILLS — IMAGE CARDS
-       ════════════════════════════ -->
   <section class="section-sm skills-strip">
     <div class="section-label reveal">Core Skills</div>
     <div class="skills-strip-grid">
@@ -581,9 +557,7 @@
     </div>
   </section>
 
-  <!-- ════════════════════════════════════
-       MINI ABOUT — photo left, stats right
-       ════════════════════════════════════ -->
+ 
   <section class="mini-about">
     <div class="mini-about-left reveal">
       <div class="section-label">About Me</div>
@@ -605,7 +579,6 @@
         
       </div>
 
-      <!-- STATS stacked in right column -->
       <div class="big-stat reveal reveal-delay-1">
         <div class="num">10+</div>
         <div class="lbl">Projects Completed</div>
@@ -622,7 +595,7 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
+
   <footer class="footer">
     <div class="footer-logo">M<span>.</span></div>
     <div class="footer-copy">© 2026 Mohid · All rights reserved</div>
