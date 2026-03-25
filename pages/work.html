@@ -6,7 +6,7 @@
   <title>Work — Mohid</title>
   <link rel="stylesheet" href="../css/style.css" />
   <style>
-    /* ── FILTER BAR ── */
+    
     .filter-bar {
       padding: 28px 48px; display: flex; gap: 8px;
       flex-wrap: wrap; border-bottom: 1px solid var(--border);
@@ -23,15 +23,13 @@
       background: rgba(0,255,136,0.05);
     }
 
-    /* ════════════════════════════════════
-       WORK GRID — 12 column bento
-       ════════════════════════════════════ */
+
     .work-section { background: var(--black); }
 
 
 
 
-    /* WEBSITES grid */
+   
     .work-bento.grid-web {
       display: grid;
       grid-template-columns: 5fr 3fr 4fr;
@@ -43,7 +41,7 @@
     .work-bento.grid-web .work-card.w-web-3 { grid-column: 3;     grid-row: 1; }
     .work-bento.grid-web .work-card.w-web-4 { grid-column: 2 / 4; grid-row: 2; }
 
-    /* GAME grid */
+    
     .work-bento.grid-game {
       display: grid;
       grid-template-columns: 1fr;
@@ -51,7 +49,7 @@
       gap: 4px;
     }
 
-    /* APPS grid — 3 portrait cards same height, side by side */
+    
     .work-bento.grid-apps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -59,7 +57,7 @@
       gap: 4px;
     }
 
-    /* VIDEOS grid — 2 square cards side by side */
+    
     .work-bento.grid-videos {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -67,7 +65,7 @@
       gap: 4px;
     }
 
-    /* card base — no aspect-ratio, height driven by grid rows */
+   
     .work-card {
       position: relative; overflow: hidden;
       background: var(--grey); cursor: none;
@@ -76,7 +74,7 @@
       position: absolute; inset: 0; z-index: 10;
     }
 
-    /* ── thumbnail ── */
+
     .work-thumb {
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
@@ -91,7 +89,7 @@
     }
     .work-card:hover .work-thumb { transform: scale(1.04); }
 
-    /* placeholder */
+  
     .work-placeholder {
       position: relative; z-index: 1;
       display: flex; flex-direction: column;
@@ -105,7 +103,7 @@
       line-height: 1.7; max-width: 120px;
     }
 
-    /* ── overlay ── */
+   
     .work-overlay {
       position: absolute; inset: 0; z-index: 5;
       background: linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.1) 55%, transparent 100%);
@@ -133,7 +131,6 @@
     }
     .work-tag.live { border-color: var(--neon); color: var(--neon); }
 
-    /* badge */
     .work-badge {
       position: absolute; top: 14px; left: 14px; z-index: 6;
       background: rgba(0,0,0,0.88); border: 1px solid var(--neon);
@@ -142,7 +139,6 @@
     }
     .work-badge.grey { border-color: var(--border); color: var(--muted); }
 
-    /* play icon */
     .work-play {
       position: absolute; top: 50%; left: 50%;
       transform: translate(-50%,-50%);
@@ -153,7 +149,7 @@
     }
     .work-card:hover .work-play { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
 
-    /* section dividers */
+  
     .work-group-label {
       padding: 48px 0 20px;
       font-family: var(--font-display);
@@ -238,7 +234,7 @@
   
   <section class="work-section section">
 
-      <!-- ── WEBSITES — forms one unified rectangle ── -->
+      
       <div class="work-group-label reveal" data-group="web">Websites</div>
       <div class="work-bento grid-web">
 
@@ -316,7 +312,7 @@
 
       </div>
 
-      <!-- ── GAME — single full-width block ── -->
+     
       <div class="work-group-label reveal" data-group="game">Game</div>
       <div class="work-bento grid-game">
 
@@ -341,7 +337,7 @@
 
       </div>
 
-      <!-- ── APPS — 3 portrait cards, one unified block ── -->
+    
       <div class="work-group-label reveal" data-group="app">Apps</div>
       <div class="work-bento grid-apps">
 
@@ -401,7 +397,7 @@
 
       </div>
 
-      <!-- ── VIDEOS — 2 square cards, one unified block ── -->
+      
       <div class="work-group-label reveal" data-group="video">Video Edits</div>
       <div class="work-bento grid-videos">
 
@@ -447,7 +443,7 @@
       </div>
   </section>
 
-  <!-- FOOTER -->
+  
   <footer class="footer">
     <div class="footer-logo">M<span>.</span></div>
     <div class="footer-copy">© 2026 Mohid · All rights reserved</div>
@@ -456,7 +452,7 @@
 
   <script src="../js/main.js"></script>
   <script>
-    // Filter — shows/hides cards and group labels
+
       const filterBtns = document.querySelectorAll('.filter-btn');
       filterBtns.forEach(btn => {
           btn.addEventListener('click', () => {
